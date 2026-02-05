@@ -32,6 +32,7 @@ button {
 
 .yes {
     background: pink;
+    position: relative;
 }
 
 .no {
@@ -109,12 +110,12 @@ button {
 </audio>
 
 <script>
-/* YES button chaos */
+/* YES button moves on desktop + mobile */
 const yesBtn = document.getElementById("yesBtn");
 const texts = ["Almost 😏", "Try again 😂", "No chance 😈", "Nice try 🤭"];
 let count = 0;
 
-yesBtn.addEventListener("mouseover", () => {
+function moveYes() {
     yesBtn.innerText = texts[count % texts.length];
     count++;
 
@@ -124,9 +125,18 @@ yesBtn.addEventListener("mouseover", () => {
     yesBtn.style.position = "absolute";
     yesBtn.style.left = x + "px";
     yesBtn.style.top = y + "px";
+}
+
+/* Desktop hover */
+yesBtn.addEventListener("mouseover", moveYes);
+
+/* Mobile touch */
+yesBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    moveYes();
 });
 
-/* NO flow */
+/* NO button popup */
 function areYouSure() {
     const popup = document.createElement("div");
     popup.className = "popup";
@@ -137,6 +147,7 @@ function areYouSure() {
     document.body.appendChild(popup);
 }
 
+/* Final NO flow */
 function finalNo() {
     document.querySelector(".popup").remove();
     document.getElementById("main").style.display = "none";
