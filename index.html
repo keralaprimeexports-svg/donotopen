@@ -8,7 +8,7 @@
 body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(#8b0000, #ff4d4d);
+    background: linear-gradient(#7a0000, #ff4d6d);
     font-family: 'Georgia', serif;
     color: white;
     display: flex;
@@ -22,7 +22,7 @@ body {
 }
 
 button {
-    padding: 15px 30px;
+    padding: 15px 35px;
     font-size: 20px;
     border: none;
     border-radius: 30px;
@@ -43,24 +43,34 @@ button {
     display: none;
 }
 
-.flowers {
+.roses {
     position: absolute;
     width: 100%;
     height: 100%;
     pointer-events: none;
 }
 
-.flower {
+.rose {
     position: absolute;
-    top: -50px;
-    font-size: 30px;
-    animation: fall 5s linear infinite;
+    top: -40px;
+    font-size: 28px;
+    animation: fall linear infinite;
 }
 
 @keyframes fall {
     to {
         transform: translateY(110vh);
     }
+}
+
+.popup {
+    position: fixed;
+    background: white;
+    color: black;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    z-index: 10;
 }
 </style>
 </head>
@@ -70,42 +80,49 @@ button {
 <div class="container" id="main">
     <h1>💖 Will you be my Valentine, <br> Muthmani? 💖</h1>
 
-    <button class="yes" id="yesBtn">YES 💕</button>
-    <button class="no" onclick="noClicked()">NO 🙈</button>
+    <button class="yes">YES 💕</button>
+    <button class="no" onclick="areYouSure()">NO 🙈</button>
 </div>
 
 <div class="container hidden" id="funny">
     <h1 style="font-size:50px;">🎉 CONGRATULATIONS 🎉</h1>
-    <h2>You have successfully won in life 😎</h2>
+    <h2>You have officially won in life 😎</h2>
 
-    <img src="https://keralaprimeexports-svg.github.io/donotopen/monkey.png" width="200">
+    <img src="https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif"
+         width="220"
+         style="border-radius:20px;margin-top:20px;">
 
-    <div class="flowers" id="flowers"></div>
+    <div class="roses" id="roses"></div>
 </div>
 
+<audio id="sound">
+    <source src="https://www.soundjay.com/human/sounds/applause-01.mp3">
+</audio>
+
 <script>
-const yesBtn = document.getElementById("yesBtn");
+function areYouSure() {
+    const popup = document.createElement("div");
+    popup.className = "popup";
+    popup.innerHTML = `
+        <h2>Are you REALLY sure? 🤨</h2>
+        <button onclick="finalNo()">Yes 😈</button>
+    `;
+    document.body.appendChild(popup);
+}
 
-yesBtn.addEventListener("mouseover", () => {
-    const x = Math.random() * (window.innerWidth - yesBtn.offsetWidth);
-    const y = Math.random() * (window.innerHeight - yesBtn.offsetHeight);
-
-    yesBtn.style.position = "absolute";
-    yesBtn.style.left = x + "px";
-    yesBtn.style.top = y + "px";
-});
-
-function noClicked() {
+function finalNo() {
     document.getElementById("main").style.display = "none";
+    document.querySelector(".popup").remove();
     document.getElementById("funny").style.display = "block";
+    document.getElementById("sound").play();
 
-    for (let i = 0; i < 40; i++) {
-        let flower = document.createElement("div");
-        flower.className = "flower";
-        flower.innerHTML = "🌸";
-        flower.style.left = Math.random() * 100 + "vw";
-        flower.style.animationDuration = (3 + Math.random() * 3) + "s";
-        document.getElementById("flowers").appendChild(flower);
+    for (let i = 0; i < 50; i++) {
+        let rose = document.createElement("div");
+        rose.className = "rose";
+        rose.innerHTML = "🌹";
+        rose.style.left = Math.random() * 100 + "vw";
+        rose.style.animationDuration = (3 + Math.random() * 4) + "s";
+        document.getElementById("roses").appendChild(rose);
     }
 }
 </script>
