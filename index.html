@@ -72,6 +72,10 @@ button {
     text-align: center;
     z-index: 10;
 }
+
+.loading {
+    font-size: 30px;
+}
 </style>
 </head>
 
@@ -79,9 +83,14 @@ button {
 
 <div class="container" id="main">
     <h1>💖 Will you be my Valentine, <br> Muthmani? 💖</h1>
+    <p id="malayalam">ശ്രമിച്ചിട്ട് കാര്യമില്ല 😌</p>
 
-    <button class="yes">YES 💕</button>
+    <button class="yes" id="yesBtn">YES 💕</button>
     <button class="no" onclick="areYouSure()">NO 🙈</button>
+</div>
+
+<div class="container hidden" id="loading">
+    <h1 class="loading">Thinking... 🤔💭</h1>
 </div>
 
 <div class="container hidden" id="funny">
@@ -95,11 +104,29 @@ button {
     <div class="roses" id="roses"></div>
 </div>
 
-<audio id="sound">
-    <source src="https://www.soundjay.com/human/sounds/applause-01.mp3">
+<audio id="drum">
+    <source src="https://www.soundjay.com/misc/sounds/drum-roll-01.mp3">
 </audio>
 
 <script>
+/* YES button chaos */
+const yesBtn = document.getElementById("yesBtn");
+const texts = ["Almost 😏", "Try again 😂", "No chance 😈", "Nice try 🤭"];
+let count = 0;
+
+yesBtn.addEventListener("mouseover", () => {
+    yesBtn.innerText = texts[count % texts.length];
+    count++;
+
+    const x = Math.random() * (window.innerWidth - yesBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - yesBtn.offsetHeight);
+
+    yesBtn.style.position = "absolute";
+    yesBtn.style.left = x + "px";
+    yesBtn.style.top = y + "px";
+});
+
+/* NO flow */
 function areYouSure() {
     const popup = document.createElement("div");
     popup.className = "popup";
@@ -111,19 +138,24 @@ function areYouSure() {
 }
 
 function finalNo() {
-    document.getElementById("main").style.display = "none";
     document.querySelector(".popup").remove();
-    document.getElementById("funny").style.display = "block";
-    document.getElementById("sound").play();
+    document.getElementById("main").style.display = "none";
+    document.getElementById("loading").style.display = "block";
 
-    for (let i = 0; i < 50; i++) {
-        let rose = document.createElement("div");
-        rose.className = "rose";
-        rose.innerHTML = "🌹";
-        rose.style.left = Math.random() * 100 + "vw";
-        rose.style.animationDuration = (3 + Math.random() * 4) + "s";
-        document.getElementById("roses").appendChild(rose);
-    }
+    setTimeout(() => {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("funny").style.display = "block";
+        document.getElementById("drum").play();
+
+        for (let i = 0; i < 50; i++) {
+            let rose = document.createElement("div");
+            rose.className = "rose";
+            rose.innerHTML = "🌹";
+            rose.style.left = Math.random() * 100 + "vw";
+            rose.style.animationDuration = (3 + Math.random() * 4) + "s";
+            document.getElementById("roses").appendChild(rose);
+        }
+    }, 2000);
 }
 </script>
 
