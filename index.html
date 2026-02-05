@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💘</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(#8b0000, #3b0000);
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: white;
+  }
+
+  .card, .win {
+    background: rgba(255,255,255,0.12);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    width: 90%;
+    max-width: 360px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .buttons {
+    margin-top: 30px;
+    position: relative;
+    height: 120px;
+  }
+
+  button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  #yesBtn {
+    background: #ff4d6d;
+    color: white;
+    top: 0;
+  }
+
+  #noBtn {
+    background: white;
+    color: #8b0000;
+    bottom: 0;
+  }
+
+  .win {
+    display: none;
+  }
+
+  .flower {
+    position: fixed;
+    top: -30px;
+    font-size: 24px;
+    animation: fall 5s linear infinite;
+  }
+
+  @keyframes fall {
+    to { transform: translateY(110vh); }
+  }
+
+  img {
+    width: 150px;
+    margin-top: 20px;
+    border-radius: 15px;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- QUESTION CARD -->
+<div class="card" id="card">
+  <div style="font-size:28px">🌹🍫💖</div>
+  <h1>Will you be my Valentine, Muthmani?</h1>
+  <p>Try clicking YES 😏</p>
+
+  <div class="buttons">
+    <button id="yesBtn">YES 💘</button>
+    <button id="noBtn">NO 😌</button>
+  </div>
+</div>
+
+<!-- WIN SCREEN -->
+<div class="win" id="win">
+  <h1 style="font-size:42px">🎉 CONGRATULATIONS 🎉</h1>
+  <p>You have successfully won in life 😌🏆</p>
+  <p>Elite decision-making skills.</p>
+  <img src="https://i.imgur.com/5cX1FqN.png" alt="Monkey">
+</div>
+
+<script>
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const card = document.getElementById("card");
+  const win = document.getElementById("win");
+
+  yesBtn.addEventListener("mouseover", () => {
+    yesBtn.style.left = Math.random() * 80 + "%";
+  });
+
+  noBtn.addEventListener("click", () => {
+    card.style.display = "none";
+    win.style.display = "block";
+
+    const flowers = ["🌸","🌺","🌹","💐"];
+    for (let i = 0; i < 30; i++) {
+      const f = document.createElement("div");
+      f.className = "flower";
+      f.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+      f.style.left = Math.random() * 100 + "vw";
+      f.style.animationDuration = (3 + Math.random() * 4) + "s";
+      document.body.appendChild(f);
+    }
+  });
+</script>
+
+</body>
+</html>
